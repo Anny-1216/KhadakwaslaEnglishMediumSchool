@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - KEMS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Dashboard specific styles */
+        .dashboard-container {
+            padding: 2rem;
+            margin-top: 70px;
+        }
+
+        .welcome-section {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-card h2 i {
+            font-size: 1.2em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .info-value {
+            color: var(--secondary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .secondary-btn {
+            background: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .secondary-btn:hover {
+            background: var(--border-color);
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .subjects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .subject-tag {
+            background: var(--light-bg);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+
+            .welcome-section {
+                padding: 1.5rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="AuthManager.logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+
+    <div class="dashboard-container">
+        <section class="welcome-section">
+            <h1>Welcome, <span id="facultyName">Faculty</span>!</h1>
+            <p>Faculty Dashboard - Khadakwasla English Medium School</p>
+        </section>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h2><i class="fas fa-chalkboard-teacher"></i> Faculty Information</h2>
+                <div class="info-grid">
+                    <span class="info-label">Faculty ID:</span>
+                    <span class="info-value" id="facultyId"></span>
+                    <span class="info-label">Department:</span>
+                    <span class="info-value" id="facultyDepartment"></span>
+                    <span class="info-label">Role:</span>
+                    <span class="info-value" id="facultyRole"></span>
+                    <span class="info-label">Subjects:</span>
+                    <div class="subjects-list" id="facultySubjects"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h2><i class="fas fa-tasks"></i> Classes Overview</h2>
+                <div class="info-grid">
+                    <span class="info-label">Today's Classes:</span>
+                    <span class="info-value">4</span>
+                    <span class="info-label">Students:</span>
+                    <span class="info-value">120</span>
+                    <span class="info-label">Assignments:</span>
+                    <span class="info-value">3 Pending</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn primary-btn">View Schedule</button>
+                    <button class="action-btn secondary-btn">Manage Classes</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h2><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
+                <ul id="eventsList">
+                    <li>Department Meeting - March 15</li>
+                    <li>Science Exhibition - March 20</li>
+                    <li>Parent-Teacher Meeting - March 25</li>
+                </ul>
+                <div class="action-buttons">
+                    <button class="action-btn primary-btn">Add Event</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h2><i class="fas fa-bell"></i> Notifications</h2>
+                <ul id="notificationList">
+                    <li>Submit exam papers by March 15</li>
+                    <li>Update student attendance</li>
+                    <li>Complete grade submissions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth/login.js"></script>
+    <script>
+        // Check authentication
+        const currentUser = AuthManager.checkAuth();
+        if (currentUser.type !== 'faculty') {
+            window.location.href = '../login.html';
+        }
+
+        // Populate user information
+        document.getElementById('facultyName').textContent = currentUser.name;
+        document.getElementById('facultyId').textContent = currentUser.id;
+        document.getElementById('facultyDepartment').textContent = currentUser.department;
+        document.getElementById('facultyRole').textContent = currentUser.role;
+
+        // Populate subjects
+        const subjectsList = document.getElementById('facultySubjects');
+        currentUser.subjects.forEach(subject => {
+            const subjectTag = document.createElement('span');
+            subjectTag.className = 'subject-tag';
+            subjectTag.textContent = subject;
+            subjectsList.appendChild(subjectTag);
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - KEMS</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Dashboard specific styles */
+        .dashboard-container {
+            padding: 2rem;
+            margin-top: 70px;
+        }
+
+        .welcome-section {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-card h2 i {
+            font-size: 1.2em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.5rem 1rem;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .info-value {
+            color: var(--secondary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .secondary-btn {
+            background: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .secondary-btn:hover {
+            background: var(--border-color);
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+
+            .welcome-section {
+                padding: 1.5rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="AuthManager.logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+
+    <div class="dashboard-container">
+        <section class="welcome-section">
+            <h1>Welcome, <span id="studentName">Student</span>!</h1>
+            <p>Student Dashboard - Khadakwasla English Medium School</p>
+        </section>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h2><i class="fas fa-user-graduate"></i> Student Information</h2>
+                <div class="info-grid">
+                    <span class="info-label">Student ID:</span>
+                    <span class="info-value" id="studentId"></span>
+                    <span class="info-label">Class:</span>
+                    <span class="info-value" id="studentClass"></span>
+                    <span class="info-label">Section:</span>
+                    <span class="info-value" id="studentSection"></span>
+                    <span class="info-label">Roll No:</span>
+                    <span class="info-value" id="studentRoll"></span>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h2><i class="fas fa-book"></i> Academic Overview</h2>
+                <div class="info-grid">
+                    <span class="info-label">Attendance:</span>
+                    <span class="info-value">95%</span>
+                    <span class="info-label">Last Test Score:</span>
+                    <span class="info-value">85/100</span>
+                    <span class="info-label">Assignments Due:</span>
+                    <span class="info-value">2</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn primary-btn">View Details</button>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <h2><i class="fas fa-calendar-alt"></i> Upcoming Events</h2>
+                <ul id="eventsList">
+                    <li>Annual Sports Day - March 15</li>
+                    <li>Science Exhibition - March 20</li>
+                    <li>Parent-Teacher Meeting - March 25</li>
+                </ul>
+            </div>
+
+            <div class="dashboard-card">
+                <h2><i class="fas fa-bell"></i> Notifications</h2>
+                <ul id="notificationList">
+                    <li>New assignment posted in Mathematics</li>
+                    <li>Test scheduled for Science on March 18</li>
+                    <li>Holiday announcement for March 21</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth/login.js"></script>
+    <script>
+        // Check authentication
+        const currentUser = AuthManager.checkAuth();
+        if (currentUser.type !== 'student') {
+            window.location.href = '../login.html';
+        }
+
+        // Populate user information
+        document.getElementById('studentName').textContent = currentUser.name;
+        document.getElementById('studentId').textContent = currentUser.id;
+        document.getElementById('studentClass').textContent = currentUser.class;
+        document.getElementById('studentSection').textContent = currentUser.section;
+        document.getElementById('studentRoll').textContent = currentUser.rollNo;
+    </script>
+</body>
+</html> 

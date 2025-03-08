@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Khadakwasla English Medium School</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="images/logo.png" alt="School Logo" class="login-logo">
+            <h1>KEMS Login</h1>
+            <p>Please select your role to continue</p>
+        </div>
+
+        <div class="login-steps">
+            <!-- Step 1: Role Selection -->
+            <div class="step active" id="roleSelection">
+                <div class="role-selection">
+                    <button class="role-btn" data-role="student">
+                        <i class="fas fa-user-graduate"></i>
+                        Student
+                    </button>
+                    <button class="role-btn" data-role="faculty">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        Faculty
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Login Form -->
+            <div class="step" id="loginForm">
+                <button class="back-btn" id="backToRole">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                
+                <!-- Student Login Form -->
+                <form id="studentLoginForm" class="login-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="studentId">Student ID</label>
+                        <input type="text" id="studentId" name="studentId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentPassword">Password</label>
+                        <input type="password" id="studentPassword" name="studentPassword" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login as Student</button>
+                    <div class="form-footer">
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                </form>
+
+                <!-- Faculty Login Form -->
+                <form id="facultyLoginForm" class="login-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="facultyId">Faculty ID</label>
+                        <input type="text" id="facultyId" name="facultyId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="facultyPassword">Password</label>
+                        <input type="password" id="facultyPassword" name="facultyPassword" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login as Faculty</button>
+                    <div class="form-footer">
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="login-footer">
+            <a href="index.html">Back to Homepage</a>
+        </div>
+    </div>
+
+    <script src="js/auth/login.js"></script>
+</body>
+</html> 
